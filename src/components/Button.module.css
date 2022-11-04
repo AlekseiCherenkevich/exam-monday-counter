@@ -6,4 +6,5 @@
 .button:disabled {
     background-color: white;
     color: grey;
+    opacity: 0.5;
 }
