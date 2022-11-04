@@ -1,5 +1,15 @@
+
+
 .App {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-70%);
+  width: 600px;
+  height: 300px;
   text-align: center;
+  background-color: lightskyblue;
+  border-radius: 30px;
 }
 
 .App-logo {

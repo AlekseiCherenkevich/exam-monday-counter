@@ -1,24 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useState} from 'react';
+
 import './App.css';
+import Count from "./components/Count";
+import Button from "./components/Button";
 
 function App() {
+    const [count, setCount] =useState<number>(0)
+    const increase = () => {
+        if (count < 5) {
+            setCount(count + 1)
+        }
+    }
+    const reset = () => {
+        setCount(0)
+    }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        <Count fontColor={count === 5 ? 'red' : 'black'} count={count}/>
+      <>
+          <Button isDisabled={count === 5} callback={increase}>inc</Button>
+          <Button isDisabled={count === 0} callback={reset}>reset</Button>
+      </>
     </div>
   );
 }
