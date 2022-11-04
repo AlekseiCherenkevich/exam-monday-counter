@@ -1,4 +1,5 @@
 import React from 'react';
+import s from './Button.module.css'
 
 type ButtonPropsType = {
     children?: string
@@ -17,7 +18,11 @@ const Button: React.FC<ButtonPropsType> = (props) => {
         margin: '0 10px'
     }
     return (
-        <button style={style} disabled={isDisabled} onClick={callback}>{children}</button>
+        <button className={s.button}
+            style={style}
+            disabled={isDisabled}
+            onClick={callback}
+        >{children}</button>
     );
 };
 
