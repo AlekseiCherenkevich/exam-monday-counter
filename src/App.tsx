@@ -1,26 +1,64 @@
-import React, {useState} from 'react';
-
+import React, {useEffect, useState} from 'react';
 import './App.css';
-import Count from "./components/Count";
-import Button from "./components/Button";
+import {Counter} from "./components/Counter";
+import {Settings} from "./components/Settings";
+
+export type StateType = {
+    start: number
+    max: number
+    count: number
+    message: MessageType
+}
+
+export type MessageType = '' | 'Incorrect value!' | "enter values and press 'set'"
 
 function App() {
-    const [count, setCount] = useState<number>(0)
+    const [state, setState] = useState<StateType>({start: 0, max: 5, count: 0, message: ''})
+
     const increase = () => {
-        if (count < 5) {
-            setCount(count + 1)
+        if (state.count < state.max) {
+            setState({...state, count: state.count + 1, message: ''})
         }
     }
     const reset = () => {
-        setCount(0)
+        setState({...state, count: state.start, message: ''})
     }
+
+    const changeStartValue = (start: number) => {
+        if (start >= state.max || start < 0) {
+            setState({...state, start: start, message: "Incorrect value!"})
+        } else {
+            setState({...state, start: start, message: "enter values and press 'set'"})
+        }
+    }
+
+    const changeMaxValue = (max: number) => {
+        if (max <= state.start) {
+            setState({...state, max: max, message: "Incorrect value!"})
+        } else {
+            setState({...state, max: max, message: "enter values and press 'set'"})
+        }
+    }
+
+    const setLocalStorage = () => {
+        localStorage.setItem('counterState', JSON.stringify({
+            start: state.start, max: state.max, count: state.start, message: ''
+        }))
+        reset()
+    }
+
+    useEffect(()=>{
+        const localStorageData = localStorage.getItem('counterState')
+        if(localStorageData) {
+            setState(JSON.parse(localStorageData))
+        }
+    },[])
+
+
     return (
         <div className="App">
-            <Count fontColor={count === 5 ? 'red' : 'black'} count={count}/>
-            <>
-                <Button isDisabled={count === 5} callback={increase}>inc</Button>
-                <Button isDisabled={count === 0} callback={reset}>reset</Button>
-            </>
+            <Settings  state={state} changeStartValue={changeStartValue} changeMaxValue={changeMaxValue} setLocalStorage={setLocalStorage}/>
+            <Counter {...state} increase={increase} reset={reset}/>
         </div>
     );
 }
