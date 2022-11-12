@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/exam-monday-counter/static/css/main.d928b60c.css",
-    "main.js": "/exam-monday-counter/static/js/main.5dcb5f5a.js",
+    "main.css": "/exam-monday-counter/static/css/main.d2b296e2.css",
+    "main.js": "/exam-monday-counter/static/js/main.65c58ca2.js",
     "static/js/787.9d1e934d.chunk.js": "/exam-monday-counter/static/js/787.9d1e934d.chunk.js",
     "index.html": "/exam-monday-counter/index.html",
-    "main.d928b60c.css.map": "/exam-monday-counter/static/css/main.d928b60c.css.map",
-    "main.5dcb5f5a.js.map": "/exam-monday-counter/static/js/main.5dcb5f5a.js.map",
+    "main.d2b296e2.css.map": "/exam-monday-counter/static/css/main.d2b296e2.css.map",
+    "main.65c58ca2.js.map": "/exam-monday-counter/static/js/main.65c58ca2.js.map",
     "787.9d1e934d.chunk.js.map": "/exam-monday-counter/static/js/787.9d1e934d.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.d928b60c.css",
-    "static/js/main.5dcb5f5a.js"
+    "static/css/main.d2b296e2.css",
+    "static/js/main.65c58ca2.js"
   ]
 }
