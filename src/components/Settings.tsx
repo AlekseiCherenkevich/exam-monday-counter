@@ -35,7 +35,7 @@ export const Settings: React.FC<SettingsPropsType> = (props) => {
                 type="number"
                 value={state.max}
                 onChange={onChangeMaxValueHandler}
-                style={state.max <= state.start ? {backgroundColor: 'red'} : undefined}
+                style={state.message === "Incorrect value!" ? {backgroundColor: 'red'} : undefined}
             />
         </div>
         <Button isDisabled={state.message === "Incorrect value!"} callback={setLocalStorage}>set</Button>

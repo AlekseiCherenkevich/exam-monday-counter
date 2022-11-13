@@ -25,7 +25,7 @@ function App() {
     }
 
     const changeStartValue = (start: number) => {
-        if (start >= state.max || start < 0) {
+        if (start >= state.max || start < 0 || state.max < 1) {
             setState({...state, start: start, message: "Incorrect value!"})
         } else {
             setState({...state, start: start, message: "enter values and press 'set'"})
@@ -33,7 +33,7 @@ function App() {
     }
 
     const changeMaxValue = (max: number) => {
-        if (max <= state.start) {
+        if (max <= state.start || max < 1 || state.start < 0) {
             setState({...state, max: max, message: "Incorrect value!"})
         } else {
             setState({...state, max: max, message: "enter values and press 'set'"})
