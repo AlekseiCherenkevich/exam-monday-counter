@@ -1,7 +1,7 @@
 import React from "react";
 import Count from "./Count";
 import Button from "./Button";
-import {MessageType} from "../App";
+import { MessageType } from "../store/message-reducer";
 
 type CounterPropsType = {
     count: number
