@@ -1,7 +1,13 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import './App.css';
 import {Counter} from "./components/Counter";
 import {Settings} from "./components/Settings";
+import {useDispatch, useSelector} from "react-redux";
+import {AppStateType} from "./store/store";
+import {increaseAC, resetAC} from "./store/count-reducer";
+import {changeStartValueAC} from "./store/start-reducer";
+import {changeMaxValueAC} from "./store/max-reducer";
+import {MessageType} from "./store/message-reducer";
 
 export type StateType = {
     start: number
@@ -10,55 +16,68 @@ export type StateType = {
     message: MessageType
 }
 
-export type MessageType = '' | 'Incorrect value!' | "enter values and press 'set'"
+export const checkLocalStorage = (key: string, defaultValue: number) => {
+    const data = localStorage.getItem('counterState')
+    return data
+        ? JSON.parse(data)[key]
+        : defaultValue
+}
+
 
 function App() {
-    const [state, setState] = useState<StateType>({start: 0, max: 5, count: 0, message: ''})
+    const dispatch = useDispatch()
+
+    const start = useSelector<AppStateType, number>(state => state.start)
+    const count = useSelector<AppStateType, number>(state => state.count)
+    const max = useSelector<AppStateType, number>(state => state.max)
+    const message = useSelector<AppStateType, MessageType>(state => state.message)
+
 
     const increase = () => {
-        if (state.count < state.max) {
-            setState({...state, count: state.count + 1, message: ''})
+        if (count < max) {
+            dispatch(increaseAC())
         }
     }
     const reset = () => {
-        setState({...state, count: state.start, message: ''})
+        dispatch(resetAC(start))
     }
 
-    const changeStartValue = (start: number) => {
-        if (start >= state.max || start < 0 || state.max < 1) {
-            setState({...state, start: start, message: "Incorrect value!"})
+    const changeStartValue = (value: number) => {
+        if (value >= max || value < 0 || max < 1) {
+            dispatch(changeStartValueAC(value, "Incorrect value!"))
         } else {
-            setState({...state, start: start, message: "enter values and press 'set'"})
+            dispatch(changeStartValueAC(value, "enter values and press 'set'"))
         }
     }
 
-    const changeMaxValue = (max: number) => {
-        if (max <= state.start || max < 1 || state.start < 0) {
-            setState({...state, max: max, message: "Incorrect value!"})
+    const changeMaxValue = (value: number) => {
+        if (value <= start || value < 1 || start < 0) {
+            dispatch(changeMaxValueAC(value, "Incorrect value!"))
         } else {
-            setState({...state, max: max, message: "enter values and press 'set'"})
+            dispatch(changeMaxValueAC(value, "enter values and press 'set'"))
         }
     }
 
     const setLocalStorage = () => {
         localStorage.setItem('counterState', JSON.stringify({
-            start: state.start, max: state.max, count: state.start, message: ''
+            start: start, max: max, count: start
         }))
         reset()
     }
 
-    useEffect(()=>{
-        const localStorageData = localStorage.getItem('counterState')
-        if(localStorageData) {
-            setState(JSON.parse(localStorageData))
-        }
-    },[])
-
-
     return (
         <div className="App">
-            <Settings  state={state} changeStartValue={changeStartValue} changeMaxValue={changeMaxValue} setLocalStorage={setLocalStorage}/>
-            <Counter {...state} increase={increase} reset={reset}/>
+            <Settings state={{start: start, count: count, max: max, message: message}}
+                      changeStartValue={changeStartValue}
+                      changeMaxValue={changeMaxValue}
+                      setLocalStorage={setLocalStorage}
+            />
+            <Counter start={start}
+                     count={count}
+                     max={max}
+                     message={message}
+                     increase={increase}
+                     reset={reset}/>
         </div>
     );
 }
